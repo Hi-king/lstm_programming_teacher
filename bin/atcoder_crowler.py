@@ -5,15 +5,14 @@ import os
 import urllib
 from bs4 import BeautifulSoup
 
+rootpath = os.path.join(os.path.dirname(__file__), "..")
+
 parser = argparse.ArgumentParser()
 parser.add_argument("contest", help="e.g. abc041")
 parser.add_argument("stage", help="e.g. a")
 parser.add_argument("language", help="e.g. python2_2.7.6")
 parser.add_argument("status", help="e.g. AC")
 args = parser.parse_args()
-
-
-rootpath = os.path.join(os.path.dirname(__file__), "..")
 
 datadir = os.path.join(rootpath, "data", args.contest, args.stage, args.language, args.status)
 if not os.path.exists(datadir):
@@ -34,7 +33,10 @@ def save_submissions(url):
 
         filepath = os.path.join(datadir, submission_id)
         with open(filepath, "w+") as f:
-            f.write(code)
+            try:
+                f.write(code)
+            except:
+                pass
         print(filepath)
     return True
 
