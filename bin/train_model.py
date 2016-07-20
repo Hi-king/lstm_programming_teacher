@@ -14,6 +14,7 @@ import subprocess
 import tempfile
 import time
 import logging
+import pickle
 
 rootpath = os.path.join(os.path.dirname(__file__), "..")
 sys.path.append(rootpath)
@@ -63,17 +64,7 @@ class WholeProgramPredictor(object):
             predicted = self.model(chainer.Variable(self.xp.array([self.chara_encoder(chara)], self.xp.int32)))
         return predicted
 
-class CharaEncoder(object):
-    def __init__(self):
-        self.charaset = set()
-        self.index_dict = {}
-
-    def __call__(self, chara):
-        if not chara in self.charaset:
-            self.charaset.add(chara)
-            self.index_dict[chara] = len(self.charaset)-1
-        return self.index_dict[chara]
-
+    def predicted_concate(self, program):
 
 def data_loader(file_pathes):
     for file_path in file_pathes:
@@ -169,7 +160,7 @@ def test(postivies, negatives, predictor, head=1000, prefix=""):
 model = lstm_programming_teacher.models.CodeModel(vocab_size=100, midsize=10, output_feature_size=2)
 if args.gpu >= 0:
     model.to_gpu()
-predictor = WholeProgramPredictor(model, chara_encoder=CharaEncoder(), xp=xp)
+predictor = WholeProgramPredictor(model, chara_encoder=lstm_programming_teacher.utils.CharaEncoder(), xp=xp)
 optimizer = chainer.optimizers.Adam()
 optimizer.setup(model)
 for epoch in range(args.epoch):
@@ -179,3 +170,4 @@ for epoch in range(args.epoch):
     test(positive_test, negative_test, predictor)
     chainer.serializers.save_npz(os.path.join(savepath, "{}_model.npz".format(epoch)), model)
     chainer.serializers.save_npz(os.path.join(savepath, "{}_optimizer.npz".format(epoch)), optimizer)
+    predictor.chara_encoder.save(os.path.join(savepath, "{}_chara_encoder.dump".format(epoch)))
