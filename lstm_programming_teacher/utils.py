@@ -18,6 +18,7 @@ class CharaEncoder(object):
             pickle.dump(self.index_dict, f)
 
     def load(self, filename):
-        with open(filename) as f:
+        print(filename)
+        with open(filename, "rb") as f:
             self.index_dict = pickle.load(f)
         self.charaset = set(self.index_dict.keys())

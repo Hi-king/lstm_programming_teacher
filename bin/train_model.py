@@ -64,7 +64,7 @@ class WholeProgramPredictor(object):
             predicted = self.model(chainer.Variable(self.xp.array([self.chara_encoder(chara)], self.xp.int32)))
         return predicted
 
-    def predicted_concate(self, program):
+    # def predicted_concate(self, program):
 
 def data_loader(file_pathes):
     for file_path in file_pathes:
