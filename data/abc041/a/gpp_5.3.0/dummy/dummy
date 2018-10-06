@@ -1,0 +1,14 @@
+#include <cstdio>
+#include <cstring>
+using namespace std;
+
+char s[110];
+
+int main (void) {
+	int i;
+	fgets(s, sizeof(s), stdin);
+	scanf("%d", &i);
+
+	printf("%c\n", s[i-1]);
+	return 0;
+}
