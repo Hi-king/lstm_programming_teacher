@@ -16,5 +16,5 @@ Check The Code
 --------------
 
 ```
-python bin/programming_advisor.py output/${your_model}/${epoch}_model.npz output/${your_model}/${epoch}_chara_encoder.dump data/abc041/a/gpp_5.3.0/AC/788889
+python bin/programming_advisor.py output/1468914085.51/70_model.npz output/1468914085.51/70_chara_encoder.dump   ./data/abc041/a/gpp_5.3.0/dummy/788889
 ```

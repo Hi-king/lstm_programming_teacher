@@ -47,7 +47,8 @@ for chara in open(args.target_code).read().lower():
 # values = [value/maxvalue for value in values]
 with open(args.outfile, "w+") as f:
     f.write("<html>")
-    f.write("<h1>あなたのコードは{}点</h1>".format(int(100*(values[-1]))))
+    #f.write("<h1>あなたのコードは{}点</h1>".format(int(100*(values[-1]))))
+    f.write("<h1>あなたのコードはおそらく{}</h1>".format("正解" if values[-1] > 0.5 else "不正解"))
     for chara, value in zip(open(args.target_code).read(), values):
         if chara == "\n":
             f.write("<br />")
